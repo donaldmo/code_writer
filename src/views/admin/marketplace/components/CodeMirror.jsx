@@ -1,8 +1,9 @@
+import React, { useState, useEffect } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
 import { dracula } from "@uiw/codemirror-theme-dracula";
-import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { PyScriptProvider, PyScript } from "pyscript-react";
 import sampleText from '../../../../code/greet.txt'
 
 const CodeMirrow = ({ codeText }) => {
@@ -10,10 +11,10 @@ const CodeMirrow = ({ codeText }) => {
     const [code, setCode] = useState('');
 
     useEffect(() => {
-      fetch(sampleText)
-        .then(response => response.text())
-        .then(data => setCode(data))
-        .catch(error => console.error('Error fetching data:', error));
+        fetch(sampleText)
+            .then(response => response.text())
+            .then(data => setCode(data))
+            .catch(error => console.error('Error fetching data:', error));
     }, []);
 
     const extensions = [
@@ -21,7 +22,8 @@ const CodeMirrow = ({ codeText }) => {
             insertSpaces: true,
             tabSize: 4,
             indentOnInput: true,
-            lineNumbers: true
+            lineNumbers: true,
+            fontSize: 32
         }),
     ];
 
@@ -30,12 +32,19 @@ const CodeMirrow = ({ codeText }) => {
             const endPoint = 'http://localhost:5001/run-python'
 
             const response = await axios.post(endPoint, { code })
+            console.log(response.data.output)
+
             setOutput(response.data.output);
         } catch (error) {
             console.error('Error executing Python code:', error)
             setOutput('Error executing Python code')
         }
     };
+
+    const onChange = React.useCallback((val, viewUpdate) => {
+        console.log('val:', val);
+        setCode(val);
+    }, []);
 
     return (
         <div
@@ -47,7 +56,7 @@ const CodeMirrow = ({ codeText }) => {
                     theme={dracula}
                     extensions={extensions}
                     language={python}
-                    onBeforeChange={(editor, data, value) => setCode(value)}
+                    onChange={onChange}
                 />
 
                 <button onClick={runPythonCode}>Run Python Code</button>
@@ -61,6 +70,10 @@ const CodeMirrow = ({ codeText }) => {
                         readOnly
                         style={{ width: '100%', fontFamily: 'monospace' }}
                     />
+
+                    <PyScriptProvider>
+                        <PyScript>display("Hello world!")</PyScript>
+                    </PyScriptProvider>
                 </div>
             </div>
         </div>

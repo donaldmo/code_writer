@@ -5,6 +5,7 @@ import CodeMirrow from "./components/CodeMirror";
 import tableDataTopCreators from "views/admin/marketplace/variables/tableDataTopCreators.json";
 import { tableColumnsTopCreators } from "views/admin/marketplace/variables/tableColumnsTopCreators";
 import TopCreatorTable from "./components/TableTopCreators";
+import General from "../profile/components/General";
 
 const Marketplace = () => {
 
@@ -20,11 +21,12 @@ const Marketplace = () => {
       {/* right side section */}
 
       <div className="col-span-1 h-full w-full rounded-xl 2xl:col-span-1">
-        <TopCreatorTable
+        <General />
+        {/* <TopCreatorTable
           extra="mb-5"
           tableData={tableDataTopCreators}
           columnsData={tableColumnsTopCreators}
-        />
+        /> */}
       </div>
     </div>
   );

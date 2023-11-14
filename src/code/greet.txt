@@ -1,6 +1,6 @@
-# example.py
+from functools import reduce
 
-def greet():
-    print('Hello, Donald!')
-
-greet()
+def combined_operations(numbers):
+    squared_numbers = map(lambda x: x**2, numbers)
+    even_squares = filter(lambda x: x % 2 == 0, squared_numbers)
+    return reduce(lambda x, y: x + y, even_squares)
