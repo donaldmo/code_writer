@@ -3,7 +3,7 @@ import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 import axios from "axios";
-import { PyScriptProvider, PyScript } from "pyscript-react";
+// import { PyScriptProvider, PyScript } from "pyscript-react";
 import sampleText from '../../../../code/greet.txt'
 
 const CodeMirrow = ({ codeText }) => {
@@ -71,9 +71,9 @@ const CodeMirrow = ({ codeText }) => {
                         style={{ width: '100%', fontFamily: 'monospace' }}
                     />
 
-                    <PyScriptProvider>
+                    {/* <PyScriptProvider>
                         <PyScript>display("Hello world!")</PyScript>
-                    </PyScriptProvider>
+                    </PyScriptProvider> */}
                 </div>
             </div>
         </div>
